@@ -13,7 +13,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven {
-        url = uri("https://4tkbytes.github.io/dropbear/")
+        url = uri("https://tirbofish.github.io/dropbear/")
     }
 }
 
@@ -21,7 +21,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven {
-        url = uri("https://4tkbytes.github.io/dropbear/")
+        url = uri("https://tirbofish.github.io/dropbear/")
     }
 }
 
@@ -55,12 +55,12 @@ val libPathProvider = provider {
                     "============================================================================\n" +
                     "You have two options. You can either build it yourself or download a prebuilt one. I would assume that you are just a standard game dev, so you would most likely want a prebuilt one. \n" +
                     "\n" +
-                    "a. You can download the eucalyptus_core library from https://github.com/4tkbytes/dropbear   in the releases tab. \n" +
+                    "a. You can download the eucalyptus_core library from https://github.com/tirbofish/dropbear   in the releases tab. \n" +
                     "Once you have the library, you can put it in the libs folder in the root of this project.\n" +
                     "\n" +
                     "In the case that there is no release, or you just want the cutting edge, you can build it yourself. \n" +
                     "\n" +
-                    "b. Build instructions can be found here: https://github.com/4tkbytes/dropbear/blob/main/README.md   but here it is anyways: \n" +
+                    "b. Build instructions can be found here: https://github.com/tirbofish/dropbear/blob/main/README.md   but here it is anyways: \n" +
                     "\n" +
                     "\t1. Clone the dropbear repository. \n" +
                     "\t2. Run cargo build --release\n" +
