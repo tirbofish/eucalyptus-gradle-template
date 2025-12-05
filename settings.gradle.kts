@@ -2,7 +2,7 @@ pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
-        maven { url = uri("https://4tkbytes.github.io/dropbear/") }
+        maven { url = uri("https://tirbofish.github.io/dropbear/") }
     }
     resolutionStrategy {
         eachPlugin {
@@ -13,5 +13,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = "project"
+rootProject.name = "projectExample"
 
