@@ -45,8 +45,10 @@ val libPathProvider = provider {
         layout.projectDirectory.file("libs/$libName").asFile
     )
 
-    candidates.firstOrNull { it.exists() }?.absolutePath
-        ?: throw GradleException(
+    val foundLib = candidates.firstOrNull { it.exists() }
+
+    if (foundLib == null) {
+        println(
             "The required library [$libName] does not exist. \n" +
                     "\n" +
                     "Here is how to fix it:\n" +
@@ -70,6 +72,10 @@ val libPathProvider = provider {
                     "Anyhow, glhf ꉂ(˵˃ ᗜ ˂˵)\n" +
                     "============================================================================"
         )
+        ""  // Return empty string instead of throwing or returning "ERROR"
+    } else {
+        foundLib.absolutePath
+    }
 }
 
 kotlin {
@@ -87,23 +93,26 @@ kotlin {
     nativeTarget.apply {
         binaries {
             sharedLib {
-                baseName = "project"
+                baseName = "projectExample"
 
                 val nativeLibPath = libPathProvider.get()
-                if (isLinux || isMacOs) {
-                    linkerOpts(
-                        nativeLibPath,
-                        "-Wl,-rpath,\\\$ORIGIN"
-                    )
-                } else if (isMingwX64) {
-                    linkerOpts(
-                        "$nativeLibPath.lib"
-                    )
+                if (nativeLibPath.isNotEmpty()) {
+                    if (isLinux || isMacOs) {
+                        linkerOpts(
+                            nativeLibPath,
+                            "-Wl,-rpath,\\\$ORIGIN"
+                        )
+                    } else if (isMingwX64) {
+                        linkerOpts(
+                            "$nativeLibPath.lib"
+                        )
+                    }
+                } else {
+                    throw GradleException("Native library not found. Please check the error message above.")
                 }
             }
         }
     }
-
     sourceSets {
         commonMain {
             dependencies {
