@@ -145,7 +145,7 @@ kotlin {
     }
 }
 
-val extractJavaSources by tasks.registering(Copy::class) {
+val extractJavaSources by tasks.registering(Sync::class) {
     group = "jni"
     description = "Copies .java files from jvmMain/kotlin to a temp directory for header generation"
 
@@ -164,13 +164,21 @@ val generateJniHeaders by tasks.registering(JavaCompile::class) {
 
     classpath = files(
         tasks.named("compileKotlinJvm").map { it.outputs.files },
-        configurations.named("jvmMainCompileClasspath") 
+        configurations.named("jvmCompileClasspath")
     )
 
     destinationDirectory.set(layout.buildDirectory.dir("tmp/jni-dummy-classes"))
 
     val headerOutputDir = layout.buildDirectory.dir("generated/jni-headers")
     options.headerOutputDirectory.set(headerOutputDir)
+
+    doFirst {
+        val outDir = headerOutputDir.get().asFile
+        if (outDir.exists()) {
+            outDir.deleteRecursively()
+            outDir.mkdirs()
+        }
+    }
 
     doLast {
         println("Generated JNI Headers at: ${headerOutputDir.get().asFile.absolutePath}")
