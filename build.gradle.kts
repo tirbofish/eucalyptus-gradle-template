@@ -9,7 +9,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinxSerialization)
-//    id("magna-carta") version "1.0-SNAPSHOT"
+    id("com.gradleup.shadow") version "9.2.2"
 }
 
 group = "domain.projectExample"
@@ -123,6 +123,12 @@ kotlin {
         }
     }
 
+    java {
+        sourceSets.getByName("jvmMain") {
+            java.srcDirs("scripting/jvmMain/java")
+        }
+    }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -187,17 +193,4 @@ val generateJniHeaders by tasks.registering(JavaCompile::class) {
 
 tasks.named("jvmMainClasses") {
     dependsOn(generateJniHeaders)
-}
-
-tasks.register<Jar>("fatJar") {
-    archiveClassifier.set("all")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-    from(kotlin.jvm().compilations["main"].output)
-
-    from(configurations.named("jvmRuntimeClasspath").map {
-        it.map { file -> if (file.isDirectory) file else zipTree(file) }
-    })
-
-    manifest {}
 }
