@@ -1,6 +1,8 @@
+package tk.tirbofish.project
+
 import com.dropbear.DropbearEngine
 import com.dropbear.Runnable
-import com.dropbear.System
+import com.dropbear.ecs.System
 
 @Runnable(["tag1", "tag2"])
 class Script: System() {
@@ -8,7 +10,7 @@ class Script: System() {
         println("I have awoken")
     }
 
-    override fun update(engine: DropbearEngine, deltaTime: Float) {
+    override fun update(engine: DropbearEngine, deltaTime: Double) {
         println("Updating!")
     }
 
