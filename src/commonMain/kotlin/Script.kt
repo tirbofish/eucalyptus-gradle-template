@@ -4,7 +4,7 @@ import com.dropbear.DropbearEngine
 import com.dropbear.Runnable
 import com.dropbear.ecs.System
 
-@Runnable(["tag1", "tag2"])
+@Runnable("tag1", "tag2")
 class Script: System() {
     override fun load(engine: DropbearEngine) {
         println("I have awoken")
